@@ -60,7 +60,7 @@ function addManger() {
         },
     ])
     .then (res => {
-        const manager = new Manger (res.managerName, res.managerId, res.managerEmail, res.officeNumber);
+        const manager = new Manager (res.managerName, res.managerId, res.managerEmail, res.officeNumber);
         teamArray.push(manager);
         addTeamMember();
     })
