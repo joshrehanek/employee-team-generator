@@ -36,7 +36,7 @@ function addTeamMember() {
     })
 }
 
-function addManger() {
+function addManager() {
     inquirer.prompt([
         {
             type: "input",
@@ -67,11 +67,64 @@ function addManger() {
 }
 
 function addEngineer() {
+        inquirer.prompt([
+            {
+                type: "input",
+                name: "engineerName",
+                message: "What is this Engineers' name?:"
+            },
+            {
+                type: "input",
+                name: "engineerId",
+                message: "What is this Engineers' id?:"
+            },
+            {
+                type: "input",
+                name: "engineerEmail",
+                message: "What is this Engineers' email?:"
+            },
+            {
+                type: "input",
+                name: "github",
+                message: "What is this Engineers' Github username?:"
+            },
+        ])
+        .then (res => {
+            const engineer = new Engineer (res.engineerName, res.engineerId, res.engineerEmail, res.github);
+            teamArray.push(engineer);
+            addTeamMember();
+        })
+    }
 
-}
 
 function addIntern() {
-
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "internName",
+            message: "What is this Interns' name?:"
+        },
+        {
+            type: "input",
+            name: "internId",
+            message: "What is this Interns' id?:"
+        },
+        {
+            type: "input",
+            name: "internEmail",
+            message: "What is this Interns'' email?:"
+        },
+        {
+            type: "input",
+            name: "school",
+            message: "What school did this intern attend?:"
+        },
+    ])
+    .then (res => {
+        const intern = new Intern (res.internName, res.internId, res.internEmail, res.school);
+        teamArray.push(intern);
+        addTeamMember();
+    })
 }
 
 function buildTeam () {
@@ -79,7 +132,7 @@ function buildTeam () {
 } 
 
 
-addManger();
+addManager();
 
 
 
