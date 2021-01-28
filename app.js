@@ -1,17 +1,19 @@
+//import modules
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
+const render = require("./lib/htmlRenderer");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
+//create empty teamArray to push new members into
 const teamArray = [];
-
+//variables to resolve and join file paths to team.html, for rendering
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
-
-const render = require("./lib/htmlRenderer");
-
+//function to add team different members
 function addTeamMember() {
+    //inquirer prompt initiated
     inquirer.prompt([
         {
             type: "list",
@@ -20,23 +22,32 @@ function addTeamMember() {
             choices: [
                 "Engineer",
                 "Intern",
-                "Done; Please build my team." 
-        ]
+                "Done; Please build my team."
+            ]
         },
     ])
-    .then (res => {
-        switch (res.teamMember){
-            case "Engineer":
-                return addEngineer();
-            case "Intern":
-                return addIntern();
-            default:
-                buildTeam();
-        }
-    })
+        //after prompt is answered then...
+        .then(res => {
+            //switch statement hadling team memeber type
+            switch (res.teamMember) {
+                //if Engineer...
+                case "Engineer":
+                    //then
+                    return addEngineer();
+                //if Intern...
+                case "Intern":
+                    //then
+                    return addIntern();
+                //default staement for "Done; Please build my team." 
+                default:
+                    //calls buildTeam function
+                    buildTeam();
+            }
+        })
 }
-
+// function to add manager
 function addManager() {
+    
     inquirer.prompt([
         {
             type: "input",
@@ -59,45 +70,53 @@ function addManager() {
             message: "What is the Managers' office number:"
         },
     ])
-    .then (res => {
-        const manager = new Manager (res.managerName, res.managerId, res.managerEmail, res.officeNumber);
-        teamArray.push(manager);
-        addTeamMember();
-    })
-}
-
-function addEngineer() {
-        inquirer.prompt([
-            {
-                type: "input",
-                name: "engineerName",
-                message: "What is this Engineers' name?:"
-            },
-            {
-                type: "input",
-                name: "engineerId",
-                message: "What is this Engineers' id?:"
-            },
-            {
-                type: "input",
-                name: "engineerEmail",
-                message: "What is this Engineers' email?:"
-            },
-            {
-                type: "input",
-                name: "github",
-                message: "What is this Engineers' Github username?:"
-            },
-        ])
-        .then (res => {
-            const engineer = new Engineer (res.engineerName, res.engineerId, res.engineerEmail, res.github);
-            teamArray.push(engineer);
+        //take that response and then...
+        .then(res => {
+            //manager variable consiting of info from prompt
+            const manager = new Manager(res.managerName, res.managerId, res.managerEmail, res.officeNumber);
+            //push variable to teamArray
+            teamArray.push(manager);
+            //call addTeamMember function
             addTeamMember();
         })
-    }
-
-
+}
+//function to add Engineer
+function addEngineer() {
+    
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "engineerName",
+            message: "What is this Engineers' name?:"
+        },
+        {
+            type: "input",
+            name: "engineerId",
+            message: "What is this Engineers' id?:"
+        },
+        {
+            type: "input",
+            name: "engineerEmail",
+            message: "What is this Engineers' email?:"
+        },
+        {
+            type: "input",
+            name: "github",
+            message: "What is this Engineers' Github username?:"
+        },
+    ])  //take that response and then...
+        .then(res => {
+            //engineer variable containing new info
+            const engineer = new Engineer(res.engineerName, res.engineerId, res.engineerEmail, res.github);
+            //push variable to teamArray
+            teamArray.push(engineer);
+            //call addTeamMember function
+            addTeamMember();
+        })
+}
+//function to add an Intern
 function addIntern() {
+
     inquirer.prompt([
         {
             type: "input",
@@ -119,17 +138,20 @@ function addIntern() {
             name: "school",
             message: "What school did this intern attend?:"
         },
-    ])
-    .then (res => {
-        const intern = new Intern (res.internName, res.internId, res.internEmail, res.school);
-        teamArray.push(intern);
-        addTeamMember();
-    })
+    ])  //take that response and then...
+        .then(res => {
+            // intern variable containg new intern info
+            const intern = new Intern(res.internName, res.internId, res.internEmail, res.school);
+            //push variable into teamArray
+            teamArray.push(intern);
+            //calls addTeamMember function
+            addTeamMember();
+        })
 }
-
-function buildTeam () {
+//function to buildTeam
+function buildTeam() {
+    //runs teamArray info through render module and delvers the data to the outputPath variable specified as 'team.html' in line 13
     fs.writeFileSync(outputPath, render(teamArray), "utf-8");
-} 
-
-
+}
+//allss addManager function which acts to initate the entire app
 addManager();
