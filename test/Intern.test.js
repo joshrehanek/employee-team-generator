@@ -1,5 +1,6 @@
+//import Intern module
 const Intern = require("../lib/Intern");
-
+//testing for Intern module; read it method statements for each tests function
 describe("Intern", () => {
   describe("school", () => {
     it("should recognize a new intern school has been generated", () => {

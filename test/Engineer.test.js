@@ -1,5 +1,6 @@
+//import Engineer module
 const Engineer = require("../lib/Engineer");
-
+//testing for Engineer module; read it method statements for each tests function
 describe("Engineer", () => {
   describe("github", () => {
     it("should recognize a new engineer github username has been generated", () => {

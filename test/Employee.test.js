@@ -1,5 +1,6 @@
+//import Employee module
 const Employee = require("../lib/Employee");
-
+//testing for Employee module; read it method statements for each tests function
 describe("Employee", () => {
   describe("generate", () => {
     it("should recognize a new employee object has been generated", () => {
@@ -57,8 +58,3 @@ describe("Employee", () => {
     });
   });
 });
-
-// test("Can instantiate Employee instance", () => {
-//   const e = new Employee();
-//   expect(typeof(e)).toBe("object");
-// });
