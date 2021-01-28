@@ -153,5 +153,5 @@ function buildTeam() {
     //runs teamArray info through render module and delvers the data to the outputPath variable specified as 'team.html' in line 13
     fs.writeFileSync(outputPath, render(teamArray), "utf-8");
 }
-//allss addManager function which acts to initate the entire app
+//adds addManager function which acts to initate the entire app
 addManager();
